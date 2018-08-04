@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:th="http://www.thymeleaf.org">
+<head>
+ <title>Home</title>
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+ <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
+</head>
+<body>
+
+ <div class="container">
+  <h2>Hi <span th:utext="${userName.firstname} + ' ' + ${userName.lastname}"></span>, this is the home page.</h2>
+  <a th:href="@{/logout}">Sign out</a>
+ </div>
+ 
+<table class="table table-hover table-bordered table-responsive-md table-striped text-center">
+<thead class="thead-dark">
+    <tr>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Role</th>
+      <th scope="col">Password</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="user : ${users}">
+                <td contenteditable="true" th:text="${user.firstname}"></td>
+                <td contenteditable="true" th:text="${user.lastname}"></td>
+                <td contenteditable="true" th:text="${user.email}"></td>
+                <td contenteditable="true" >ADMIN</td>
+                <td contenteditable="true" th:text="${user.email}"></td>
+                <td>
+                	<a th:href="@{/product/delete/{id}(id=${user.id})}" class="btn btn-primary btn-lg active">Delete</a>
+                	<a th:href="@{/edit/{email}(email=${user.email})}"  class="btn btn-primary btn-lg active">Update</a>
+                </td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
