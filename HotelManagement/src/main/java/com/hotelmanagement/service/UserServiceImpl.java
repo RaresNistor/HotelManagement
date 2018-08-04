@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.hotelmanagement.model.client.Client;
 import com.hotelmanagement.model.user.Role;
 import com.hotelmanagement.model.user.User;
+import com.hotelmanagement.repository.ClientRepository;
 import com.hotelmanagement.repository.RoleRespository;
 import com.hotelmanagement.repository.UserRepository;
 
@@ -25,6 +27,9 @@ public class UserServiceImpl implements UserService {
 	 @Autowired
 	 private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	 @Autowired
+	 private ClientRepository clientRepository;
+	 
 	 @Override
 	 public User findUserByEmail(String email) {
 	  return userRepository.findByEmail(email);
@@ -32,11 +37,13 @@ public class UserServiceImpl implements UserService {
 	
 	 @Override
 	 public void saveUser(User user) {
-	  user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-	  user.setActive(1);
-	  Role userRole = roleRespository.findByRole("ADMIN");
-	  user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-	  userRepository.save(user);
+		 Client client = createClient(user);
+		 clientRepository.save(client);
+		 user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		 user.setActive(1);
+		 Role userRole = roleRespository.findByRole("CLIENT");
+		 user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+		 userRepository.save(user);
 	 }
 
 	@Override
@@ -54,4 +61,12 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(user);
 	}
 
+	private Client createClient(User user) {
+		Client client = new Client();
+		client.setEmail(user.getEmail());
+		client.setFirstname(user.getFirstname());
+		client.setLastname(user.getLastname());
+		client.setPassword(user.getPassword());
+		return client;
+	}
 }
