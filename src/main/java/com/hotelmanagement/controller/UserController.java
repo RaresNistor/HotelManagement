@@ -1,5 +1,6 @@
 package com.hotelmanagement.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -84,12 +85,13 @@ public class UserController {
 		 }
 	 
 		 @RequestMapping(value= {"/edit/{email}"}, method=RequestMethod.GET)
-		 public ModelAndView signup(@PathVariable String email) {
+		 public ModelAndView edit(@PathVariable String email) {
 			  ModelAndView model = new ModelAndView();
 			  User user = userService.findUserByEmail(email);
+			  user.setRrole(user.getRoles().get(0).getRole());
 			  model.addObject("user", user);
 			  model.setViewName("user/edit");
-			  
+			  model.addObject("allRoles",userService.getAllRoles());
 			  return model;
 		 }
 		 

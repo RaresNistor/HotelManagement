@@ -5,27 +5,17 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-default" th:fragment="navigation">
-
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed"
-          data-toggle="collapse" data-target="#navbarNavAltMarkup"
-          aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span> <span
-            class="icon-bar"></span> <span class="icon-bar"></span> <span
-            class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/home/home">Home</a>
-      </div>
-
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a class="nav-item nav-link active" href="about">About</a></li>
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navigation">
+  <a class="navbar-brand" href="#">HMS</a>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="/home/home">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="#">Features</a>
+      <a class="nav-item nav-link" href="#">Pricing</a>
+      <a class="nav-item nav-link" th:href="@{/logout}">Sign out</a>
     </div>
-  </nav>
+  </div>
+</nav>
 </body>
 
 </html>

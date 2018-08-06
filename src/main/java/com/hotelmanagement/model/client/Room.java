@@ -30,6 +30,10 @@ public class Room {
 	@NotNull
 	@Column(name="type")
 	private String type;
+
+	@NotNull
+	@Column(name="nr_persons")
+	private Integer numberOfPersons;
 	
 	@ManyToMany(cascade=CascadeType.DETACH)
 	@JoinTable(name="room_product", joinColumns=@JoinColumn(name="room_id"), inverseJoinColumns=@JoinColumn(name="product_id"))
@@ -64,6 +68,22 @@ public class Room {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Integer getNumberOfPersons() {
+		return numberOfPersons;
+	}
+
+	public void setNumberOfPersons(Integer numberOfPersons) {
+		this.numberOfPersons = numberOfPersons;
+	}
+
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
 	public List<Product> getProducts() {

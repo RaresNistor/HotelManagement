@@ -1,4 +1,5 @@
 package com.hotelmanagement.model.user;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "user")
@@ -36,11 +38,27 @@ public class User {
 	 @Column(name = "active")
 	 private int active;
 	 
+	 @Transient
+	 private String rrole;
+	 
 	 @ManyToMany(cascade=CascadeType.DETACH)
 	 @JoinTable(name="user_role", joinColumns=@JoinColumn(name="user_id"), inverseJoinColumns=@JoinColumn(name="role_id"))
 	 private List<Role> roles;
 	
-	 public Long getId() {
+	 public String getRrole() {
+		return rrole;
+	}
+
+	public void setRrole(String rrole) {
+		this.rrole = rrole;
+	}
+
+	public User() {
+		super();
+		roles = new ArrayList<Role>();
+	}
+
+	public Long getId() {
 	  return id;
 	 }
 	

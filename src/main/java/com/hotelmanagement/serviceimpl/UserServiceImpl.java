@@ -1,4 +1,4 @@
-package com.hotelmanagement.service;
+package com.hotelmanagement.serviceimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,6 +10,7 @@ import com.hotelmanagement.model.user.User;
 import com.hotelmanagement.repository.ClientRepository;
 import com.hotelmanagement.repository.RoleRespository;
 import com.hotelmanagement.repository.UserRepository;
+import com.hotelmanagement.service.UserService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,5 +70,9 @@ public class UserServiceImpl implements UserService {
 		client.setLastname(user.getLastname());
 		client.setPassword(user.getPassword());
 		return client;
+	}
+	
+	public List<Role> getAllRoles(){
+		return roleRespository.findAll();
 	}
 }
