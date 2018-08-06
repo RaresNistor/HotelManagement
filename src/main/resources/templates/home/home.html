@@ -27,12 +27,12 @@
                 <td contenteditable="true" th:text="${user.email}"></td>
                 <td contenteditable="true" th:text= "${user.roles[0].role}"></td>
                 <td>
-                	<a th:href="@{/edit/{email}(email=${user.email})}"  class="btn btn-primary btn-lg active">EDIT USER</a>
+                	<a th:href="@{/edit/{email}(email=${user.email})}"  class="btn btn-success">EDIT USER</a>
                 </td>
     </tr>
   </tbody>
 </table>
-<a th:href="@{/signup}"  class="btn btn-primary btn-lg active">EDIT USER</a>
+<a th:href="@{/create}"  class="btn btn-primary btn-lg active">Create</a>
 </div>
 </body>
 </html>

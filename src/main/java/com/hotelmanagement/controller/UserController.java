@@ -84,14 +84,27 @@ public class UserController {
 			  return model;
 		 }
 	 
+		 @RequestMapping(value= {"/create"}, method=RequestMethod.GET)
+		 public ModelAndView create() {
+			 ModelAndView model = new ModelAndView();
+			  User user = new User();
+			  user.setRrole("CLIENT");;
+			  model.addObject("user", user);
+			  model.addObject("allRoles",userService.getAllRoles());
+			  model.addObject("hideEdit",true);
+			  model.setViewName("user/edit");
+			  return model;
+		 }
+		 
 		 @RequestMapping(value= {"/edit/{email}"}, method=RequestMethod.GET)
-		 public ModelAndView edit(@PathVariable String email) {
+		 public ModelAndView create(@PathVariable String email) {
 			  ModelAndView model = new ModelAndView();
 			  User user = userService.findUserByEmail(email);
 			  user.setRrole(user.getRoles().get(0).getRole());
 			  model.addObject("user", user);
-			  model.setViewName("user/edit");
 			  model.addObject("allRoles",userService.getAllRoles());
+			  model.addObject("hideEdit", false);
+			  model.setViewName("user/edit");
 			  return model;
 		 }
 		 
