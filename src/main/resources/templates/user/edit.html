@@ -92,26 +92,23 @@
              </div>
          </div>
 		<div class="row">
-			<table>
-	            <tr>
-	                <td>Select Role:</td>
-	                <td>
-	                    <select th:field="*{rrole}" >
-	                         <option th:each="role : ${allRoles}"
-	                            th:value="${role.role}"
-	                            th:utext="${role.role}"/>
-	                  </select>
-	 
-	                </td>
-	            </tr>
-	         
-	            <tr>
-	                <td><input name="submit" type="submit" value="submit" /></td>
-	            </tr>
-	        </table>
+	         <div class="col-md-3 field-label-responsive">
+                 <label for="roles">Role: </label>
+             </div>
+             <div class="col-md-6">
+                 <div class="form-group">
+                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
+                         	<select class="selectpicker" th:field="*{rrole}" id="roles">
+								<option th:each="role : ${allRoles}"
+		                      		th:value="${role.role}"
+		                            th:utext="${role.role}"/>
+								</select>
+                     </div>
+                 </div>
+             </div>
 		</div>
          <div class="row">
-             <div class="col-md-3"></div>
              <div class="col-md-6">
                  <button type="submit" class="btn btn-success" name = "edit"><i class="fa fa-user-plus"></i> Edit</button>
              </div>
