@@ -75,4 +75,15 @@ public class UserServiceImpl implements UserService {
 	public List<Role> getAllRoles(){
 		return roleRespository.findAll();
 	}
+
+	@Override
+	public void deepCopy(User oldUser, User newUser) {
+		oldUser.setActive(1);
+		oldUser.setEmail(newUser.getEmail());
+		oldUser.setFirstname(newUser.getFirstname());
+		oldUser.setLastname(newUser.getLastname());
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(roleRespository.findByRole(newUser.getRrole()));
+		oldUser.setRoles(roles);
+	}
 }

@@ -18,4 +18,6 @@ public interface UserService {
 	 public void updateUser(User user);
 	 
 	 public List<Role> getAllRoles();
+	 
+	 public void deepCopy(User oldUser, User newUser);
 }

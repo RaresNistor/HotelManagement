@@ -55,7 +55,6 @@ public class User {
 
 	public User() {
 		super();
-		roles = new ArrayList<Role>();
 	}
 
 	public Long getId() {

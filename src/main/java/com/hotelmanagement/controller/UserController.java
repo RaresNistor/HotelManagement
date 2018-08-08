@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hotelmanagement.model.user.Role;
 import com.hotelmanagement.model.user.User;
 import com.hotelmanagement.service.UserService;
 
@@ -24,7 +25,8 @@ public class UserController {
 	
 		 @Autowired
 		 private UserService userService;
-
+		 
+		 @Autowired
 		 public UserController() {
 			super();
 		}
@@ -88,10 +90,11 @@ public class UserController {
 		 public ModelAndView create() {
 			 ModelAndView model = new ModelAndView();
 			  User user = new User();
-			  user.setRrole("CLIENT");;
+			  user.setPassword(null);
+			  user.setEmail(null);
+			  user.setRrole("CLIENT");
 			  model.addObject("user", user);
 			  model.addObject("allRoles",userService.getAllRoles());
-			  model.addObject("hideEdit",true);
 			  model.setViewName("user/edit");
 			  return model;
 		 }
@@ -103,7 +106,6 @@ public class UserController {
 			  user.setRrole(user.getRoles().get(0).getRole());
 			  model.addObject("user", user);
 			  model.addObject("allRoles",userService.getAllRoles());
-			  model.addObject("hideEdit", false);
 			  model.setViewName("user/edit");
 			  return model;
 		 }
@@ -123,7 +125,23 @@ public class UserController {
 	 
 		@RequestMapping(value="/edit" , params = "edit")
 		public ModelAndView update(@Valid User user){
-		      userService.updateUser(user);
+			  User oldUser = userService.findUserByEmail(user.getEmail());
+			  userService.deepCopy(oldUser, user);
+		      userService.updateUser(oldUser);
+		      ModelAndView model = new ModelAndView("redirect:/home/home");
+			  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			  User user1 = userService.findUserByEmail(auth.getName());
+			  List<User> users= userService.findAllUsers();
+			  model.addObject("userName", user1);
+			  model.addObject("users", users);
+			  model.setViewName("home/home");
+			  return model;
+		}
+		
+		@RequestMapping(value="/edit" , params = "save")
+		public ModelAndView save(@Valid User user){
+		      userService.deepCopy(user,user);
+		      userService.saveUser(user);
 		      ModelAndView model = new ModelAndView("redirect:/home/home");
 			  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			  User user1 = userService.findUserByEmail(auth.getName());

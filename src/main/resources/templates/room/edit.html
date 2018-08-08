@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+ layout:decorator="layout/layout">
+<head>
+ <title>Edit</title>
+</head>
+<body>
+ <div class="container" layout:fragment="content">
+     <form class="form-horizontal" role="form" method="POST" th:action="@{/room/edit}" th:object="${room}">
+      <div class="row">
+             <div class="col-md-3"></div>
+             <div class="col-md-6">
+              <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">
+     </div>
+             </div>
+         </div>
+         <div class="row">
+             <div class="col-md-3"></div>
+             <div class="col-md-6">
+                 <h2>Edit Room</h2>
+                 <hr>
+             </div>
+         </div>
+         <div class="row">
+             <div class="col-md-3 field-label-responsive">
+                 <label for="name">Room Number</label>
+             </div>
+             <div class="col-md-6">
+                 <div class="form-group">
+                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                         <input type="text" th:field="*{id}" class="form-control" id="firstname"
+                                placeholder="room" required autofocus>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         <div class="row">
+             <div class="col-md-3 field-label-responsive">
+                 <label for="name">Price</label>
+             </div>
+             <div class="col-md-6">
+                 <div class="form-group">
+                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                         <input type="text" th:field="*{price}" class="form-control" id="lastname"
+                                placeholder="$" required autofocus>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         <div class="row">
+	         <div class="col-md-3 field-label-responsive">
+                 <label for="roles">Type: </label>
+             </div>
+             <div class="col-md-6">
+                 <div class="form-group">
+                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                         	<select class="selectpicker" th:field="*{type}" id="roles">
+								<option th:each="selectedType : ${types}"
+		                      		th:value="${selectedType}"
+		                            th:utext="${selectedType}"/>
+								</select>
+                     </div>
+                 </div>
+             </div>
+		</div>
+         <div class="row">
+             <div class="col-md-3 field-label-responsive">
+                 <label for="nrPers">Number of persons:</label>
+             </div>
+             <div class="col-md-6">
+                 <div class="form-group">
+                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                         <input type="number" th:field="*{numberOfPersons}" class="form-control" id="nrPers"
+                                placeholder="0" required autofocus>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         <div class="row" >
+             <div class="col-md-1">
+                 <button  type="submit" th:classappend="${hideCreate}==1?'hidden':''" class="btn btn-success" name = "edit"><i class="fa fa-user-plus"></i> Edit</button>
+             </div>
+             <div class="col-md-1">
+                 <button type="submit"  th:classappend="${hideCreate}==1?'hidden':''" class="btn btn-success" name = "delete"><i class="fa fa-user-plus"></i> Delete</button>
+             </div>
+              <div class="col-md-1">
+                 <button  type="submit" th:classappend="${hideCreate}==0?'hidden':''" class="btn btn-success" name = "save"><i class="fa fa-user-plus"></i> Save</button>
+             </div>
+         </div>
+     </form>
+     <br>
+    <table class="table table-hover table-bordered  text-center">
+	<thead class="thead-dark">
+	    <tr>
+	      <th scope="col">Name</th>
+	      <th scope="col">Description</th>
+	      <th scope="col">Edit</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr th:each="product : ${room.products}">
+	                <td contenteditable="true" th:text="${product.name}"></td>
+	                <td contenteditable="true" th:text="${product.description}"></td>
+	                <td><a class="btn btn-primary eBtn" >Add</a></td>
+	    </tr>
+	  </tbody>
+	</table>    
+ 	
+	 <div class="myForm">
+		 <form method="POST" th:action="@{/room/edit}">
+		 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		          <div class="form-group">
+		            <label for="product-name" class="col-form-label">Product:</label>
+		            <input type="text" class="form-control" id="product-name" name="product-name" value=""/>
+		          </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <input type="submit" class="btn btn-primary" value=save />
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$('.table .eBtn').on('click', function(event){
+				$('.myForm #exampleModal').modal;
+			})
+		});
+		</script>
+		</form>
+	</div>
+ 	
+ 
+ </div>
+</body>
+</html>
