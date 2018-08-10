@@ -35,6 +35,7 @@ public class Room {
 	@Column(name="nr_persons")
 	private Integer numberOfPersons;
 	
+	
 	@ManyToMany(cascade=CascadeType.DETACH)
 	@JoinTable(name="room_product", joinColumns=@JoinColumn(name="room_id"), inverseJoinColumns=@JoinColumn(name="product_id"))
 	private List<Product> products;

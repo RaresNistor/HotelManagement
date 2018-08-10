@@ -104,7 +104,7 @@
 	    <tr th:each="product : ${room.products}">
 	                <td contenteditable="true" th:text="${product.name}"></td>
 	                <td contenteditable="true" th:text="${product.description}"></td>
-	                <td><a class="btn btn-primary eBtn" >Add</a></td>
+	                <td><a th:href="@{/findOne/(id=${room.id})}" class="btn btn-primary eBtn" >Add</a></td>
 	    </tr>
 	  </tbody>
 	</table>    
@@ -136,8 +136,13 @@
 		<script type="text/javascript">
 		$(document).ready(function(){
 			$('.table .eBtn').on('click', function(event){
-				$('.myForm #exampleModal').modal;
-			})
+				event.preventDefault();
+				var href = $(this).attr('href');
+				$.get(href, function(room, status){
+					$('.myForm #product-name').val(room)
+				});
+				$('.myForm #exampleModal').modal();
+			});
 		});
 		</script>
 		</form>
